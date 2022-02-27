@@ -187,27 +187,34 @@ class _HomePageState extends State<HomePage> {
     // };
     Map<String, double> dataMap = {
       for (Band e in bands)
-        if (e.votes! > 0) e.name: e.votes!.toDouble()
+        if (e.votes != null)
+          if (e.votes! > 0) e.name: e.votes!.toDouble()
     };
     // bands.forEach((banda) {
     //   dataMap.putIfAbsent(banda.name, () => banda.votes!.toDouble());
     // });
-    return PieChart(
-      dataMap: dataMap,
-      animationDuration: const Duration(milliseconds: 800),
-      chartLegendSpacing: 32,
-      // chartRadius: MediaQuery.of(context).size.width / 2,
-      // initialAngleInDegree: 0,
-      chartType: ChartType.ring,
-      // ringStrokeWidth: 12,
-      // centerText: "BANDAS",
-      chartValuesOptions: const ChartValuesOptions(
-        showChartValueBackground: true,
-        showChartValues: true,
-        showChartValuesInPercentage: true,
-        showChartValuesOutside: false,
-        decimalPlaces: 0,
-      ),
-    );
+    if (dataMap.isNotEmpty) {
+      return PieChart(
+        dataMap: dataMap,
+        animationDuration: const Duration(milliseconds: 800),
+        chartLegendSpacing: 32,
+        // chartRadius: MediaQuery.of(context).size.width / 2,
+        // initialAngleInDegree: 0,
+        chartType: ChartType.ring,
+        // ringStrokeWidth: 12,
+        // centerText: "BANDAS",
+        chartValuesOptions: const ChartValuesOptions(
+          showChartValueBackground: true,
+          showChartValues: true,
+          showChartValuesInPercentage: true,
+          showChartValuesOutside: false,
+          decimalPlaces: 0,
+        ),
+      );
+    } else {
+      return const Center(
+        child: Text('No hay datos'),
+      );
+    }
   }
 }

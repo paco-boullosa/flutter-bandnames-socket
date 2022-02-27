@@ -4,8 +4,8 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 // enumerador para identificar el estado del servidor
 enum ServerStatus { Online, Offline, Connecting }
 
-const String _SERVER_URL = 'http://192.168.1.80';
-const String _SERVER_PORT = '3000';
+// const String _SERVER_URL = 'http://192.168.1.80:3000';
+const String _SERVER_URL = 'https://flutter-socket-server-rock.herokuapp.com/';
 
 class SocketService with ChangeNotifier {
   // ChangeNotifier ayuda a decirle Provider cuando tiene que refrescar el UI o redibujar algun widget
@@ -22,7 +22,7 @@ class SocketService with ChangeNotifier {
 
   void _initConfig() {
     _socket = IO.io(
-        '$_SERVER_URL:$_SERVER_PORT',
+        _SERVER_URL,
         IO.OptionBuilder()
             .setTransports(['websocket'])
             .enableAutoConnect() // por defecto ya es true
@@ -39,10 +39,10 @@ class SocketService with ChangeNotifier {
       notifyListeners();
     });
 
-    _socket!.on('nuevo-mensaje', (payload) {
-      // print('nuevo-mensaje: $payload');
-      print('nombre:' + payload['nombre']);
-      print('mensaje:' + payload['mensaje']);
-    });
+    // _socket!.on('nuevo-mensaje', (payload) {
+    //   // print('nuevo-mensaje: $payload');
+    //   print('nombre:' + payload['nombre']);
+    //   print('mensaje:' + payload['mensaje']);
+    // });
   }
 }
